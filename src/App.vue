@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <DeleteNote v-if="$store.state.deleting" />
+  <div
+    v-if="$store.state.user"
+    class="container | min-h-1/2 p-3 my-3 mx-auto | bg-white rounded-xl shadow-2xl | md:flex"
+  >
+    <section class="md:w-1/4 | p-3 mr-3 | bg-gray-100">
+      <a
+        @click="$store.dispatch('userLogout')"
+        class="underline text-center block font-bold mb-3"
+        href="#"
+      >
+        Logout
+      </a>
+      <SearchNote />
+      <NoteList />
+    </section>
+    <section class="p-3 | flex-grow">
+      <ActiveNote />
+    </section>
+  </div>
+  <div v-else>
+    <a
+      @click="$store.dispatch('userLogin')"
+      class="w-full h-screen | flex justify-center items-center | underline"
+      href="#"
+      >Login please</a
+    >
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import NoteList from "@/components/NoteList.vue";
+import ActiveNote from "./components/ActiveNote.vue";
+import DeleteNote from "./components/DeleteNote.vue";
+import SearchNote from "./components/SearchNote.vue";
 export default {
   name: "App",
-  components: {
-    HelloWorld,
-  },
+  components: { NoteList, ActiveNote, DeleteNote, SearchNote },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.dev {
+  border: 1px solid red;
 }
 </style>
